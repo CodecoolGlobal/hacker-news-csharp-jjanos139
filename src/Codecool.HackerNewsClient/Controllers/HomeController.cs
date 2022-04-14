@@ -29,6 +29,18 @@ namespace HackerNewsClient.Controllers
         {
             return View();
         }
+        public ActionResult Jobs()
+        {
+            return View();
+        }
+        public ActionResult Newest()
+        {
+            return View();
+        }
+        public ActionResult TopNews()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
