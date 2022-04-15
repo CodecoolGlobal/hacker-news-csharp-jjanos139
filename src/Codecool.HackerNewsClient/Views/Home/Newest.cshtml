@@ -1,7 +1,12 @@
-﻿
+﻿@model Codecool.HackerNewsClient.Models.Newest
 @{
     ViewData["Title"] = "Newest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Newest</h1>
+
+<h1>@Model.Title</h1>
+<h1>@Model.Author</h1>
+<h1>@Model.TimeAgo</h1>
+
 

@@ -1,7 +1,10 @@
-﻿
+﻿@model Codecool.HackerNewsClient.Models.TopNews
 @{
-    ViewData["Title"] = "TopNews";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>View</h1>
+<h1>@Model.Title</h1>
+<h1>@Model.Author</h1>
+<h1>@Model.TimeAgo</h1>
 

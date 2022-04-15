@@ -1,7 +1,9 @@
+using System;
 using HackerNewsClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using Codecool.HackerNewsClient.Models;
 
 namespace HackerNewsClient.Controllers
 {
@@ -31,15 +33,21 @@ namespace HackerNewsClient.Controllers
         }
         public ActionResult Jobs()
         {
-            return View();
+            var publicationDate = new DateOnly(1953, 5, 10);
+            var jobs = new Jobs() {Title = "Birth of Holy Mother", TimeAgo = publicationDate};
+            return View(jobs);
         }
         public ActionResult Newest()
         {
-            return View();
+            var publicationDate = new DateOnly(1987, 2, 9);
+            var newest = new Newest() { Title = "Birth of God", Author = "Jankovics János", TimeAgo = publicationDate };
+            return View(newest);
         }
         public ActionResult TopNews()
         {
-            return View();
+            var publicationDate = new DateOnly(2001, 1, 1);
+            var topNews = new TopNews() { Title = "Shrek", Author = "Eddie Murphy", TimeAgo = publicationDate };
+            return View(topNews);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
