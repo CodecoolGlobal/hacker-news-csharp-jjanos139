@@ -10,19 +10,15 @@
         <table>
             <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Time_Ago)
-                </th>
+                <th class="news-title">Title</th>
+                <th>Published</th>
             </tr>
             </thead>
             <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+                    <td class="news-title">
                         @Html.DisplayFor(modelItem => item.Title)
                     </td>
                     <td>

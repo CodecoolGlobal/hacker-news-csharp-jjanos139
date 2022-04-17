@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Codecool.HackerNewsClient.Models
+﻿namespace Codecool.HackerNewsClient.Models
 {
     public class Jobs
     {

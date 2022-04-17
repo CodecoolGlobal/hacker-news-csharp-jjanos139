@@ -9,7 +9,6 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Codecool.HackerNewsClient.Models;
 using Newtonsoft.Json;
-using String = System.String;
 
 namespace HackerNewsClient.Controllers
 {
@@ -21,12 +20,10 @@ namespace HackerNewsClient.Controllers
             _logger = logger;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Jobs(int? id)
         {
-            return View();
-        }
-        public async Task<ActionResult> Jobs()
-        {
+            if (id == null)
+                id = 1;
             const string baseurl = "https://api.hnpwa.com/";
 
             List<Jobs> jobsList = new List<Jobs>();
@@ -38,21 +35,27 @@ namespace HackerNewsClient.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage Res = await client.GetAsync("v0/jobs/1.json");
+                HttpResponseMessage Res = await client.GetAsync($"v0/jobs/{id}.json");
 
                 if (Res.IsSuccessStatusCode)
                 {
                     var jobsResponse = Res.Content.ReadAsStringAsync().Result;
 
                     jobsList = JsonConvert.DeserializeObject<List<Jobs>>(jobsResponse);
-
                 }
 
                 return View(jobsList);
             }
         }
-        public async Task<ActionResult> Newest()
+
+        public ActionResult Index()
         {
+            return RedirectToAction("TopNews");
+        }
+        public async Task<ActionResult> Newest(int? id)
+        {
+            if (id == null)
+                id = 1;
             const string baseurl = "https://api.hnpwa.com/";
 
             List<Newest> newestList = new List<Newest>();
@@ -64,24 +67,26 @@ namespace HackerNewsClient.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage Res = await client.GetAsync("v0/newest/1.json");
+                HttpResponseMessage Res = await client.GetAsync($"v0/newest/{id}.json");
 
                 if (Res.IsSuccessStatusCode)
                 {
                     var newestResponse = Res.Content.ReadAsStringAsync().Result;
 
                     newestList = JsonConvert.DeserializeObject<List<Newest>>(newestResponse);
-
                 }
 
                 return View(newestList);
             }
         }
-        public async Task<ActionResult> TopNews()
+
+        public async Task<ActionResult> TopNews(int? id)
         {
+            if (id == null)
+                id = 1;
             const string baseurl = "https://api.hnpwa.com/";
 
-            List<TopNews> topNewsList = new List<TopNews>();
+            List<Codecool.HackerNewsClient.Models.TopNews> topNewsList = new List<Codecool.HackerNewsClient.Models.TopNews>();
 
             using (var client = new HttpClient())
             {
@@ -90,14 +95,13 @@ namespace HackerNewsClient.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage Res = await client.GetAsync("v0/news/1.json");
+                HttpResponseMessage Res = await client.GetAsync($"v0/news/{id}.json");
 
                 if (Res.IsSuccessStatusCode)
                 {
                     var topNewsResponse = Res.Content.ReadAsStringAsync().Result;
 
-                    topNewsList = JsonConvert.DeserializeObject<List<TopNews>>(topNewsResponse);
-
+                    topNewsList = JsonConvert.DeserializeObject<List<Codecool.HackerNewsClient.Models.TopNews>>(topNewsResponse);
                 }
 
                 return View(topNewsList);
