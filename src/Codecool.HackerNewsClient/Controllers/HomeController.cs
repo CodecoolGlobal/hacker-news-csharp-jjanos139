@@ -7,20 +7,12 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Codecool.HackerNewsClient.Controllers;
 using Codecool.HackerNewsClient.Models;
 using Newtonsoft.Json;
 using String = System.String;
 
 namespace HackerNewsClient.Controllers
 {
-    /// <summary>
-    /// HomeController is a generic controller responsible for communicating with
-    /// external or internal data sources (API or other data services).
-    /// It contains methods communicating with the external API and
-    /// serializing the data into News object.
-    /// The methods return ActionResult which generates respective HTML page (View)
-    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -29,43 +21,67 @@ namespace HackerNewsClient.Controllers
             _logger = logger;
         }
 
-        /// <summary>
-        /// returns index page with top news
-        /// </summary>
-        /// <param name="page"> parameter of current page index </param>
-        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
-
-        //public ActionResult Index(int? pageIndex, string sortBy)
-        //{ 
-        //    if (!pageIndex.HasValue)
-        //        pageIndex = 1;
-
-        //    if (String.IsNullOrWhiteSpace(sortBy))
-        //        sortBy = "Name";
-
-        //    return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
-        //}
-        public ActionResult Jobs()
+        public async Task<ActionResult> Jobs()
         {
-            var publicationDate = new DateOnly(1953, 5, 10);
-            var jobs = new Jobs() { Title = "Birth of Holy Mother", TimeAgo = publicationDate };
-            return View(jobs);
+            const string baseurl = "https://api.hnpwa.com/";
+
+            List<Jobs> jobsList = new List<Jobs>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseurl);
+
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage Res = await client.GetAsync("v0/jobs/1.json");
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    var jobsResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    jobsList = JsonConvert.DeserializeObject<List<Jobs>>(jobsResponse);
+
+                }
+
+                return View(jobsList);
+            }
         }
-        public ActionResult Newest()
+        public async Task<ActionResult> Newest()
         {
-            var publicationDate = new DateOnly(1987, 2, 9);
-            var newest = new Newest() { Title = "Birth of God", Author = "Jankovics János", TimeAgo = publicationDate };
-            return View(newest);
+            const string baseurl = "https://api.hnpwa.com/";
+
+            List<Newest> newestList = new List<Newest>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseurl);
+
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage Res = await client.GetAsync("v0/newest/1.json");
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    var newestResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    newestList = JsonConvert.DeserializeObject<List<Newest>>(newestResponse);
+
+                }
+
+                return View(newestList);
+            }
         }
         public async Task<ActionResult> TopNews()
         {
             const string baseurl = "https://api.hnpwa.com/";
 
-            List<TopNews> topNewsInfo = new List<TopNews>();
+            List<TopNews> topNewsList = new List<TopNews>();
 
             using (var client = new HttpClient())
             {
@@ -80,14 +96,14 @@ namespace HackerNewsClient.Controllers
                 {
                     var topNewsResponse = Res.Content.ReadAsStringAsync().Result;
 
-                    topNewsInfo = JsonConvert.DeserializeObject<List<TopNews>>(topNewsResponse);
+                    topNewsList = JsonConvert.DeserializeObject<List<TopNews>>(topNewsResponse);
 
                 }
 
-                return View(topNewsInfo);
+                return View(topNewsList);
             }
         }
-
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

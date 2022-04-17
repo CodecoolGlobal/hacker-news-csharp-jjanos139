@@ -5,7 +5,7 @@ namespace Codecool.HackerNewsClient.Models
     public class Newest
     {
         public string Title { get; set; }
-        public string Author { get; set; }
-        public DateOnly TimeAgo { get; set; }
+        public string User { get; set; }
+        public string Time_Ago { get; set; }
     }
 }
