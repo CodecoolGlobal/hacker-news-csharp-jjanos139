@@ -6,6 +6,7 @@ namespace Codecool.HackerNewsClient.Models
     {
         public string Title { get; set; }
         public string Author { get; set; }
-        public DateOnly TimeAgo { get; set; }
+        public string URL { get; set; }
+        public int TimeAgo { get; set; }
     }
 }

@@ -1,10 +1,59 @@
-﻿@model Codecool.HackerNewsClient.Models.TopNews
+﻿@model IEnumerable<Codecool.HackerNewsClient.Models.TopNews>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Top News";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@Model.Title</h1>
-<h1>@Model.Author</h1>
-<h1>@Model.TimeAgo</h1>
+<h1>
+    Top News
+</h1>
+<div class="jumbotron">
+    <div class="col-md-4">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Author)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TimeAgo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.URL)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Author)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeAgo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.URL)
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
+
+
 

@@ -1,9 +1,16 @@
 using System;
+using System.Collections.Generic;
 using HackerNewsClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Codecool.HackerNewsClient.Controllers;
 using Codecool.HackerNewsClient.Models;
+using Newtonsoft.Json;
+using String = System.String;
 
 namespace HackerNewsClient.Controllers
 {
@@ -31,10 +38,21 @@ namespace HackerNewsClient.Controllers
         {
             return View();
         }
+
+        //public ActionResult Index(int? pageIndex, string sortBy)
+        //{ 
+        //    if (!pageIndex.HasValue)
+        //        pageIndex = 1;
+
+        //    if (String.IsNullOrWhiteSpace(sortBy))
+        //        sortBy = "Name";
+
+        //    return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
+        //}
         public ActionResult Jobs()
         {
             var publicationDate = new DateOnly(1953, 5, 10);
-            var jobs = new Jobs() {Title = "Birth of Holy Mother", TimeAgo = publicationDate};
+            var jobs = new Jobs() { Title = "Birth of Holy Mother", TimeAgo = publicationDate };
             return View(jobs);
         }
         public ActionResult Newest()
@@ -43,11 +61,31 @@ namespace HackerNewsClient.Controllers
             var newest = new Newest() { Title = "Birth of God", Author = "Jankovics János", TimeAgo = publicationDate };
             return View(newest);
         }
-        public ActionResult TopNews()
+        public async Task<ActionResult> TopNews()
         {
-            var publicationDate = new DateOnly(2001, 1, 1);
-            var topNews = new TopNews() { Title = "Shrek", Author = "Eddie Murphy", TimeAgo = publicationDate };
-            return View(topNews);
+            const string baseurl = "https://api.hnpwa.com/";
+
+            List<TopNews> topNewsInfo = new List<TopNews>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseurl);
+
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage Res = await client.GetAsync("v0/news/1.json");
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    var topNewsResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    topNewsInfo = JsonConvert.DeserializeObject<List<TopNews>>(topNewsResponse);
+
+                }
+
+                return View(topNewsInfo);
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
