@@ -3,8 +3,13 @@
     ViewData["Title"] = "Jobs";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Jobs</h1>
-
+<div>
+    <a href="@Url.Action("Jobs", new { page = (int)ViewData["page"] - 1})" class="btn btn-primary @( (int) ViewData["page"] == 1 ? "disabled" : "")">Previous</a>
+    <a href="@Url.Action("Jobs", new { page = (int)ViewData["page"] + 1})" class="btn btn-primary @( (int) ViewData["page"] == 1 ? "disabled" : "")">Next</a>
+</div>
+<br/>
+@foreach (var item in Model)
+{
 <div class="jumbotron">
     <div class="col-md-4">
         <table>
@@ -15,8 +20,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model)
-            {
+
                 <tr>
                     <td class="news-title">
                         @Html.DisplayFor(modelItem => item.Title)
@@ -25,14 +29,10 @@
                         @Html.DisplayFor(modelItem => item.Time_Ago)
                     </td>
                 </tr>
-            }
-            </tbody>
+                </tbody>
         </table>
     </div>
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-4">
-    </div>
 </div>
+}
 
 

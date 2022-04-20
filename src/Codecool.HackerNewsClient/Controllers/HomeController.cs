@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Codecool.HackerNewsClient.Models;
+using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
 
 namespace HackerNewsClient.Controllers
@@ -20,70 +21,17 @@ namespace HackerNewsClient.Controllers
             _logger = logger;
         }
 
-        public async Task<ActionResult> Jobs(int? id)
-        {
-            if (id == null)
-                id = 1;
-            const string baseurl = "https://api.hnpwa.com/";
-
-            List<Jobs> jobsList = new List<Jobs>();
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseurl);
-
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage Res = await client.GetAsync($"v0/jobs/{id}.json");
-
-                if (Res.IsSuccessStatusCode)
-                {
-                    var jobsResponse = Res.Content.ReadAsStringAsync().Result;
-
-                    jobsList = JsonConvert.DeserializeObject<List<Jobs>>(jobsResponse);
-                }
-
-                return View(jobsList);
-            }
-        }
-
+        [HttpGet]
         public ActionResult Index()
         {
             return RedirectToAction("TopNews");
         }
-        public async Task<ActionResult> Newest(int? id)
+
+        [HttpGet]
+        public async Task<ActionResult> TopNews(int? page)
         {
-            if (id == null)
-                id = 1;
-            const string baseurl = "https://api.hnpwa.com/";
-
-            List<Newest> newestList = new List<Newest>();
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseurl);
-
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage Res = await client.GetAsync($"v0/newest/{id}.json");
-
-                if (Res.IsSuccessStatusCode)
-                {
-                    var newestResponse = Res.Content.ReadAsStringAsync().Result;
-
-                    newestList = JsonConvert.DeserializeObject<List<Newest>>(newestResponse);
-                }
-
-                return View(newestList);
-            }
-        }
-
-        public async Task<ActionResult> TopNews(int? id)
-        {
-            if (id == null)
-                id = 1;
+            if (page == null)
+                page = 1;
             const string baseurl = "https://api.hnpwa.com/";
 
             List<Codecool.HackerNewsClient.Models.TopNews> topNewsList = new List<Codecool.HackerNewsClient.Models.TopNews>();
@@ -95,7 +43,7 @@ namespace HackerNewsClient.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage Res = await client.GetAsync($"v0/news/{id}.json");
+                HttpResponseMessage Res = await client.GetAsync($"v0/news/{page}.json");
 
                 if (Res.IsSuccessStatusCode)
                 {
@@ -104,10 +52,74 @@ namespace HackerNewsClient.Controllers
                     topNewsList = JsonConvert.DeserializeObject<List<Codecool.HackerNewsClient.Models.TopNews>>(topNewsResponse);
                 }
 
+                ViewData["page"] = page;
+
                 return View(topNewsList);
             }
         }
-        
+
+        [HttpGet]
+        public async Task<ActionResult> Jobs(int? page)
+        {
+            if (page == null)
+                page = 1;
+            const string baseurl = "https://api.hnpwa.com/";
+
+            List<Jobs> jobsList = new List<Jobs>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseurl);
+
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage Res = await client.GetAsync($"v0/jobs/{page}.json");
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    var jobsResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    jobsList = JsonConvert.DeserializeObject<List<Jobs>>(jobsResponse);
+                }
+
+                ViewData["page"] = page;
+
+                return View(jobsList);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Newest(int? page)
+        {
+            if (page == null)
+                page = 1;
+            const string baseurl = "https://api.hnpwa.com/";
+
+            List<Newest> newestList = new List<Newest>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseurl);
+
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage Res = await client.GetAsync($"v0/newest/{page}.json");
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    var newestResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    newestList = JsonConvert.DeserializeObject<List<Newest>>(newestResponse);
+                }
+
+                ViewData["page"] = page;
+
+                return View(newestList);
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

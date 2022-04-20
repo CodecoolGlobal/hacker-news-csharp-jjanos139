@@ -3,14 +3,15 @@
     ViewData["Title"] = "Top News";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>
-    Top News
-</h1>
+<div>
+    <a href="@Url.Action("TopNews", new { page = (int)ViewData["page"] - 1})" class="btn btn-primary @( (int) ViewData["page"] == 1 ? "disabled" : "")">Previous</a>
+    <a href="@Url.Action("TopNews", new { page = (int)ViewData["page"] + 1})" class="btn btn-primary @( (int) ViewData["page"] == 10 ? "disabled" : "")">Next</a>
+</div>
+<br/>
 @foreach (var item in Model)
 {
     <div class="jumbotron">
-        <div class="col-md-4">
+        <div>
             <table>
                 <thead>
                 <tr>
