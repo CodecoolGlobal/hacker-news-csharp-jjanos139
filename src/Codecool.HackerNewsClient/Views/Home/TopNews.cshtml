@@ -13,24 +13,28 @@
     <div class="jumbotron">
         <div>
             <table>
-                <thead>
-                <tr>
-                    <th class="news-title">Title</th>
-                    <th>Author</th>
-                    <th>Published</th>
-                </tr>
-                </thead>
                 <tbody>
-
                 <tr>
-                    <td class="news-title">
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.User)
+                        <strong>Title:</strong><a href="@Html.DisplayFor(modelItem => item.URL)"> @Html.DisplayFor(modelItem => item.Title)</a>
                     </td>
+                </tr>
+                </tbody>
+            </table>
+            <table>
+                <tbody>
+                <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Time_Ago)
+                        <strong>Author:</strong> @Html.DisplayFor(modelItem => item.User)
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <strong>Published:</strong> @Html.DisplayFor(modelItem => item.Time_Ago)
                     </td>
                 </tr>
                 </tbody>

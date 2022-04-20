@@ -4,5 +4,6 @@
     {
         public string Title { get; set; }
         public string Time_Ago { get; set; }
+        public string URL { get; set; }
     }
 }
