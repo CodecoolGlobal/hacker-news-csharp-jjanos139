@@ -7,39 +7,15 @@
     <a href="@Url.Action("Newest", new { page = (int)ViewData["page"] - 1})" class="btn btn-primary @( (int) ViewData["page"] == 1 ? "disabled" : "")">Previous</a>
     <a href="@Url.Action("Newest", new { page = (int)ViewData["page"] + 1})" class="btn btn-primary @( (int) ViewData["page"] == 10 ? "disabled" : "")">Next</a>
 </div>
-<br/>
+<br />
 @foreach (var item in Model)
 {
     <div class="jumbotron">
-        <div>
-            <table>
-                <tbody>
-                <tr>
-                    <td>
-                        <strong>Title:</strong><a href="@Html.DisplayFor(modelItem => item.URL)"> @Html.DisplayFor(modelItem => item.Title)</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <table>
-                <tbody>
-                <tr>
-                    <td>
-                        <strong>Author:</strong> @Html.DisplayFor(modelItem => item.User)
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <table>
-                <tbody>
-                <tr>
-                    <td>
-                        <strong>Published:</strong> @Html.DisplayFor(modelItem => item.Time_Ago)
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <strong>Title:</strong><a href="@Html.DisplayFor(modelItem => item.URL)"> @Html.DisplayFor(modelItem => item.Title)</a>
+        <br/>
+        <strong>Author:</strong> @Html.DisplayFor(modelItem => item.User)
+        <br/>
+        <strong>Published:</strong> @Html.DisplayFor(modelItem => item.Time_Ago)
     </div>
 }
 

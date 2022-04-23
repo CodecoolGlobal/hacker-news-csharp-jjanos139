@@ -19,7 +19,7 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
+@*                    <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TopNews">Top News</a>
                     </li>
                     <li class="nav-item">
@@ -27,6 +27,15 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Jobs">Jobs</a>
+                    </li>*@
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="top-news">Top News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="newest">Newest</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="jobs">Jobs</a>
                     </li>
                 </ul>
             </div>
@@ -35,9 +44,9 @@
 </header>
 <div class="container">
     <main role="main">
-        <h1>
+@*        <h1>
             @ViewData["Title"]
-        </h1>
+        </h1>*@
         @RenderBody()
     </main>
     </div>

@@ -11,26 +11,9 @@
 @foreach (var item in Model)
 {
     <div class="jumbotron">
-        <div>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <strong>Title:</strong><a href="@Html.DisplayFor(modelItem => item.URL)"> @Html.DisplayFor(modelItem => item.Title)</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <strong>Published:</strong> @Html.DisplayFor(modelItem => item.Time_Ago)
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <strong>Title:</strong><a href="@Html.DisplayFor(modelItem => item.URL)"> @Html.DisplayFor(modelItem => item.Title)</a>
+        <br/>
+        <strong>Published:</strong> @Html.DisplayFor(modelItem => item.Time_Ago)
     </div>
 }
 

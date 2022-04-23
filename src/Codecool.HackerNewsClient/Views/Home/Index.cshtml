@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Codecool.HackerNewsClient.Models.Index>
+@{
+    ViewData["Title"] = "TopNews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 id="h1">TopNews</h1>
+
+<div id="news">
+    <br>
+    @foreach (var item in Model)
+    {
+        <div class="jumbotron">
+            <p><strong>Title:</strong><a href="@Html.DisplayFor(modelItem => item.URL)"> @Html.DisplayFor(modelItem => item.Title)</a></p>
+            <p><strong>Author:</strong> @Html.DisplayFor(modelItem => item.User)</p>
+            <p><strong>Published:</strong> @Html.DisplayFor(modelItem => item.Time_Ago)</p>
+        </div>
+    }
+</div>
