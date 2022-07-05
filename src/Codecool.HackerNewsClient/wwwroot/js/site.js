@@ -49,7 +49,6 @@ function loadData(link, page) {
                     next.removeAttribute("disabled");
                 }
                 loadData(h1.innerHTML, page);
-                console.log(page);
             });
                 
             next.addEventListener("click", () => {
@@ -58,7 +57,6 @@ function loadData(link, page) {
                     previous.removeAttribute("disabled");
                 }
                 loadData(h1.innerHTML, page);
-                console.log(page);
             });
         });
     });
