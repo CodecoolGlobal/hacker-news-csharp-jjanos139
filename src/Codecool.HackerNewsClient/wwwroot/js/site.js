@@ -18,9 +18,9 @@ function loadData(link, page) {
             for (let i = 0; i < data.length; i++) {
                 result += `
                 <div class="jumbotron">
-                    <p><strong>Title:</strong> <a href="${data[i].url}">${data[i].title}</a></p>
-                    <p class="author"><strong>Author:</strong> ${data[i].user}</p>
-                    <p><strong>Published:</strong> ${data[i].time_ago}</p>
+                    <p><strong>Title: </strong><a href="${data[i].url}">${data[i].title}</a></p>
+                    <p class="author"><strong>Author: </strong>${data[i].user}</p>
+                    <p><strong>Published: </strong>${data[i].time_ago}</p>
                 </div>`;
             }
 
