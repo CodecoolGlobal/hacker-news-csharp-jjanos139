@@ -1,6 +1,4 @@
-using System;
-
-namespace HackerNewsClient.Models
+namespace Codecool.HackerNewsClient.Models
 {
     public class ErrorViewModel
     {

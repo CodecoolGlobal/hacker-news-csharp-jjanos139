@@ -1,9 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
-const topNews = document.querySelector("#top-news");
+﻿const topNews = document.querySelector("#top-news");
 const newest = document.querySelector("#newest");
 const jobs = document.querySelector("#jobs");
 let page = 1;
@@ -12,10 +7,8 @@ let h1 = document.querySelector("#h1");
 let authors = document.getElementsByClassName("author");
 
 function loadData(link, page) {
-    fetch("Home/" + link + "?page=" + page).then((response) => {
+    window.fetch("Home/" + link + "?page=" + page).then((response) => {
         response.json().then((data) => {
-            console.log(data);
-
             let result = `<div>
                 <button class="btn btn-primary" id="previous">Previous</button>
                 <button class="btn btn-primary" id="next">Next</button>
